@@ -51,7 +51,7 @@ BPlants = [
 ]
 
 BSales = [
-    20, 30, 10, 40, 30, 10,
+    0, 0, 0, 0, 0, 0,
     0, 0, 0, 0, 
     -30, -40, -10, -20, -20, -20
 ]
@@ -63,16 +63,17 @@ NA = nn2na(NN)
 # Lower equal restrictions: Plants
 Bleq = np.array(BPlants)
 Aleq = NA.copy()
-Aleq[6:] = 0
+Aleq[10:] = 0
+print(Aleq)
 
 # Equal restrictions: Sale points
-Aeq = NA.copy()
-#Aeq[:NN.shape[0] - 6] = 0
 Beq = np.array(BSales)
+Aeq = NA.copy()
+Aeq[:NN.shape[0] - 6] = 0
 
 bounds = tuple( [ (0, math.inf) for i in range (0, Aeq.shape[1]) ] )
 
-result = linprog(Cost, A_eq = Aeq, b_eq = Beq, bounds=bounds, method='simplex' )
+result = linprog(Cost, A_ub=Aleq, b_ub=Bleq, A_eq = Aeq, b_eq = Beq, bounds=bounds, method='simplex' )
 
 indexes = np.where(np.array(result.x) > 0.9)
 
