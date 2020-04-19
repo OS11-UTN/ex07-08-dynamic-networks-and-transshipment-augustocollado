@@ -64,7 +64,6 @@ NA = nn2na(NN)
 Bleq = np.array(BPlants)
 Aleq = NA.copy()
 Aleq[10:] = 0
-print(Aleq)
 
 # Equal restrictions: Sale points
 Beq = np.array(BSales)
